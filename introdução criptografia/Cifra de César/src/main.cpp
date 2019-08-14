@@ -16,17 +16,18 @@
 #include "Decrypt.h"
 #include "SetResult.h"
 
-int main(int argc, char const* argv[]) {
-
+int main(void) {
   std::cout << "Abrindo arquivo criptografado" << std::endl;
   DataSet mensagem("data/mensagem.txt");
   std::cout << "Abrindo arquivo do alfabeto" << std::endl;
   DataSet alfabeto("data/alfabeto.txt");
 
-  for (auto i(0); i < alfabeto.getLine(0).size(); ++i) {
+#pragma omp parallel for
+  for (unsigned long i = 0; i < alfabeto.getLine(0).size(); ++i) {
     std::cout << "Descriptografando com código " << i << std::endl;
     Decrypt descriptografia(mensagem, alfabeto, i);
-    std::cout << "Criando arquivo descriptografado com código " << i << std::endl;
+    std::cout << "Criando arquivo descriptografado com código " << i
+              << std::endl;
     SetResult descriptografado(descriptografia);
   }
 

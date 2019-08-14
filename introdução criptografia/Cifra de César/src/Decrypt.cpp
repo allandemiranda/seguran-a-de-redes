@@ -32,14 +32,22 @@ Decrypt::Decrypt(DataSet msg, DataSet alphabet, unsigned long code) {
     std::cerr << msg << std::endl;
   }
 
-  for (auto i(0); i < msg.getNumberOfLine(); ++i) {
+  for (unsigned long i(0); i < msg.getNumberOfLine(); ++i) {
     std::string newLineDecrypt = "";
-    for (auto j(0); j < msg.getLine(i).size(); ++j) {
-      for (auto k(0); k < alphabet.getLine(0).size(); ++k) {
-        if (alphabet.getLine(0)[k] == msg.getLine(i)[j]) {
-          auto position = (k + getCode()) % alphabet.getLine(0).size();
-          newLineDecrypt = newLineDecrypt + alphabet.getLine(0)[position];
-          break;
+    for (unsigned long j(0); j < msg.getLine(i).size(); ++j) {
+#pragma omp parallel
+      {
+#pragma omp for
+        for (unsigned long k = 0; k < alphabet.getLine(0).size(); ++k) {
+          if (alphabet.getLine(0)[k] == msg.getLine(i)[j]) {
+#pragma omp critical
+            {
+              unsigned long position =
+                  (k + getCode()) % alphabet.getLine(0).size();
+              newLineDecrypt = newLineDecrypt + alphabet.getLine(0)[position];
+            }
+#pragma omp cancel for
+          }
         }
       }
     }

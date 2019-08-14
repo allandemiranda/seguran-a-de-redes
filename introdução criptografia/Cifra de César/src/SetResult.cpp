@@ -12,8 +12,8 @@
 #include "../include/SetResult.h"
 
 #include <fstream>  // std::ifstream, std::ofstream
-#include <string>
 #include <iostream>
+#include <string>
 
 /**
  * @brief Set the Result:: Set Result object
@@ -22,14 +22,14 @@
  * @param code Código usado
  */
 SetResult::SetResult(Decrypt text) {
-    std::ofstream newFile;
-    std::string fileName = "result/" + std::to_string(text.getCode()) + ".txt";
-    newFile.open(fileName, std::ios::app);
-    for(auto i(0); i<text.getNumberOfLine(); ++i){
-        //std::cout << text.getLine(i) << std::endl;
-        newFile << text.getLine(i) << std::endl;
-    }
-    newFile.close();
+  std::ofstream newFile;
+  std::string fileName = "result/" + std::to_string(text.getCode()) + ".txt";
+  newFile.open(fileName, std::ios::app);
+  for (unsigned long i(0); i < text.getNumberOfLine(); ++i) {
+    // std::cout << text.getLine(i) << std::endl;
+    newFile << text.getLine(i) << std::endl;
+  }
+  newFile.close();
 }
 
 /**
