@@ -28,9 +28,11 @@ Para instalar e executar o programa siga as instruções:
 
 4. Execulte o programa: 
 
-4.1. Abra o terminal do seu sistema operacional e digite `cd`
-4.2. `cd seguran-a-de-redes/introdução\ criptografia/Cifra\ de\ César/`
-4.3. `./bin/main.o`
+Abra o terminal do seu sistema operacional e digite `cd`
+
+`cd seguran-a-de-redes/introdução\ criptografia/Cifra\ de\ César/`
+
+`./bin/main.o`
 
 5. Aguarde até o programa exibir a mensagem de "Descriptografia concluída".
 
