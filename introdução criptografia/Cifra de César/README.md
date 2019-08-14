@@ -14,8 +14,8 @@ mensagem encriptada usando uma cifra de César tradicional.
 Para instalar e executar o programa siga as instruções:
 
 1. Abra o terminal do seu sistema operacional e digite `cd`
-2. `git clone https://github.com/allandemiranda`
-3. `cd ---`
+2. `git clone https://github.com/allandemiranda/seguran-a-de-redes.git`
+3. `cd seguran-a-de-redes/introdução\ criptografia/Cifra\ de\ César/`
 4. `make`
 
 ## Como utilizar
@@ -29,7 +29,7 @@ Para instalar e executar o programa siga as instruções:
 4. Execulte o programa: 
 
 4.1. Abra o terminal do seu sistema operacional e digite `cd`
-4.2. `cd fake-news-detector`
+4.2. `cd seguran-a-de-redes/introdução\ criptografia/Cifra\ de\ César/`
 4.3. `./bin/main.o`
 
 5. Aguarde até o programa exibir a mensagem de "Descriptografia concluída".
