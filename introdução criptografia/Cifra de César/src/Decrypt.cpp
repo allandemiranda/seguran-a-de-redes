@@ -24,14 +24,6 @@
 Decrypt::Decrypt(DataSet msg, DataSet alphabet, unsigned long code) {
   setCode(code);
 
-  try {
-    if (alphabet.getNumberOfLine() > 1) {
-      throw("O alfabeto deve está todo em uma única linha");
-    }
-  } catch (std::string msg) {
-    std::cerr << msg << std::endl;
-  }
-
   for (unsigned long i(0); i < msg.getNumberOfLine(); ++i) {
     std::string newLineDecrypt = "";
     for (unsigned long j(0); j < msg.getLine(i).size(); ++j) {
@@ -42,8 +34,10 @@ Decrypt::Decrypt(DataSet msg, DataSet alphabet, unsigned long code) {
           if (alphabet.getLine(0)[k] == msg.getLine(i)[j]) {
 #pragma omp critical
             {
-              unsigned long position =
-                  (k + getCode()) % alphabet.getLine(0).size();
+              int position = k - getCode();
+              while (position < 0) {
+                position = alphabet.getLine(0).size() + position;
+              }
               newLineDecrypt = newLineDecrypt + alphabet.getLine(0)[position];
             }
 #pragma omp cancel for

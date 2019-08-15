@@ -14,6 +14,17 @@
 #include <fstream>  //!< std::ifstream
 #include <iostream>
 
+#include <algorithm>
+#include <iterator>
+#include <sstream>
+#include <string>
+
+void split1(const std::string& str, std::vector<std::string>& cont) {
+  std::istringstream iss(str);
+  std::copy(std::istream_iterator<std::string>(iss),
+            std::istream_iterator<std::string>(), std::back_inserter(cont));
+}
+
 /**
  * @brief Construct a new Data Set:: Data Set object
  *
@@ -24,7 +35,9 @@ DataSet::DataSet(std::string nameFile) {
     std::ifstream file(nameFile);
     std::string line;
     while (std::getline(file, line)) {
-      text.push_back(line);
+      std::vector<std::string> words;
+      split1(line, words);
+      text.push_back(words);
     }
   } catch (const std::ios_base::failure& e) {
     std::cerr << e.what() << '\n';
@@ -41,9 +54,9 @@ DataSet::~DataSet() {}
  * @brief Obter linha solicitada do texto
  *
  * @param numberLine Número da linha (inicia em 0)
- * @return std::string Texto da linha
+ * @return std::vector<std::string>
  */
-std::string DataSet::getLine(unsigned int numberLine) {
+std::vector<std::string> DataSet::getLine(unsigned int numberLine) {
   try {
     if (numberLine >= getNumberOfLine()) {
       throw("Valor maior que quantidade de linhas do texto");

@@ -17,17 +17,7 @@
 #include "SetResult.h"
 
 int main(int argc, char const* argv[]) {
-  if (argc != 1) {
-    std::cout << "Digite o númerodo de César corretamente" << std::endl;
-    return 0;
-  }
-
-  if (atoi(argv[1]) < 0){
-    std::cout << "Digite o númerodo de César corretamente" << std::endl;
-    return 0;
-  }
-
-  unsigned int code = atoi(argv[1]);
+  std::string code = argv[1];
 
   std::cout << "Abrindo arquivo criptografado" << std::endl;
   DataSet mensagem("data/mensagem.txt");
@@ -38,7 +28,7 @@ int main(int argc, char const* argv[]) {
   Decrypt descriptografia(mensagem, alfabeto, code);
   std::cout << "Criando arquivo descriptografado com código " << code
             << std::endl;
-  SetResult descriptografado(descriptografia);
+  //SetResult descriptografado(descriptografia);
 
   std::cout << "Descriptografia concluída" << std::endl;
 

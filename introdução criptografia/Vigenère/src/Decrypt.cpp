@@ -13,50 +13,35 @@
 
 #include <cmath>
 #include <iostream>
+#include <string>
+#include <vector>
 
 /**
  * @brief Construct a new Decrypt:: Decrypt object
  *
  * @param msg Texto cifrado
  * @param alphabet Alfabeto usando na codificação
- * @param code Número de César
+ * @param code
  */
-Decrypt::Decrypt(DataSet msg, DataSet alphabet, unsigned long code) {
-  setCode(code);
-
-  try {
-    if (alphabet.getNumberOfLine() > 1) {
-      throw("O alfabeto deve está todo em uma única linha");
+Decrypt::Decrypt(DataSet msg, DataSet alphabet, std::string code) {
+  std::vector<std::vector<char>> mapAlphabet;
+  for (auto i(0); i < alphabet.getLine(0).size(); ++i) {
+    std::vector<char> tempLine;
+    for (auto j(0); j < alphabet.getLine(0).size(); ++j) {
+      auto position = j + i;
+      if (position >= alphabet.getLine(0).size()) {
+        position = position % alphabet.getLine(0).size();
+      }
+      tempLine.push_back(alphabet.getLine(0)[position]);
     }
-  } catch (std::string msg) {
-    std::cerr << msg << std::endl;
+    mapAlphabet.push_back(tempLine);
   }
 
-  for (unsigned long i(0); i < msg.getNumberOfLine(); ++i) {
-    std::string newLineDecrypt = "";
-    for (unsigned long j(0); j < msg.getLine(i).size(); ++j) {
-      bool espaco = true;
-#pragma omp parallel
-      {
-#pragma omp for
-        for (unsigned long k = 0; k < alphabet.getLine(0).size(); ++k) {
-          if (alphabet.getLine(0)[k] == msg.getLine(i)[j]) {
-#pragma omp critical
-            {
-              unsigned long position =
-                  (k + getCode()) % alphabet.getLine(0).size();
-              newLineDecrypt = newLineDecrypt + alphabet.getLine(0)[position];
-              espaco = false;
-            }
-#pragma omp cancel for
-          }
-        }
-        if (espaco) {
-          newLineDecrypt = newLineDecrypt + " ";
-        }
-      }
+  for (int i(0); i < msg.getNumberOfLine(); ++i) {
+    for (int j(0); j < msg.getNumberOfLine(); ++j) {
+      std::cout << msg.getLine(i)[j] << " * ";
     }
-    decryptText.push_back(newLineDecrypt);
+    std::cout << std::endl;
   }
 }
 
@@ -96,17 +81,17 @@ unsigned int Decrypt::getNumberOfLine(void) {
 /**
  * @brief Adicionar o código de descriptografia
  *
- * @param newCode Códgo de César
+ * @param newCode
  */
-void Decrypt::setCode(unsigned long newCode) {
+void Decrypt::setCode(std::string newCode) {
   code = newCode;
 }
 
 /**
  * @brief Retorna o código usado
  *
- * @return unsigned long Código de César
+ * @return std::string
  */
-unsigned long Decrypt::getCode(void) {
+std::string Decrypt::getCode(void) {
   return code;
 }

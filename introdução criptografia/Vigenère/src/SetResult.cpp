@@ -23,7 +23,7 @@
  */
 SetResult::SetResult(Decrypt text) {
   std::ofstream newFile;
-  std::string fileName = "result/" + std::to_string(text.getCode()) + ".txt";
+  std::string fileName = "result/" + text.getCode() + ".txt";
   newFile.open(fileName, std::ios::app);
   for (unsigned long i(0); i < text.getNumberOfLine(); ++i) {
     // std::cout << text.getLine(i) << std::endl;

@@ -19,6 +19,7 @@
 int main(void) {
   std::cout << "Abrindo arquivo criptografado" << std::endl;
   DataSet mensagem("data/mensagem.txt");
+
   std::cout << "Abrindo arquivo do alfabeto" << std::endl;
   DataSet alfabeto("data/alfabeto.txt");
 

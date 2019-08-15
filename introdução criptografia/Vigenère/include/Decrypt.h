@@ -19,14 +19,14 @@
 class Decrypt {
  private:
   std::vector<std::string> decryptText;
-  unsigned long code;
-  void setCode(unsigned long);
+  std::string code;
+  void setCode(std::string);
 
  public:
   unsigned int getNumberOfLine();     // Número de linhas do texto
   std::string getLine(unsigned int);  // Pegar a linha
-  unsigned long getCode();            // Pegar código de César
-  Decrypt(DataSet, DataSet, unsigned long);
+  std::string getCode();              // Pegar código de César
+  Decrypt(DataSet, DataSet, std::string);
   ~Decrypt();
 };
 

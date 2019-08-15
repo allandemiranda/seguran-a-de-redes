@@ -17,10 +17,10 @@
 
 class DataSet {
  private:
-  std::vector<std::string> text;  // Texto capturado
+  std::vector<std::vector<std::string>> text;  // Texto capturado
  public:
   unsigned int getNumberOfLine();     // Número de linhas do texto
-  std::string getLine(unsigned int);  // Pegar a linha
+  std::vector<std::string> getLine(unsigned int);  // Pegar a linha
   DataSet(std::string);
   ~DataSet();
 };
