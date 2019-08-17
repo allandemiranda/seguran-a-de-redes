@@ -1,7 +1,7 @@
 /**
  * @file DataSet.cpp
  * @author Allan de Miranda
- * @brief
+ * @brief Dados capturados para o sistema
  * @version 0.1
  * @date 2019-08-14
  *
@@ -13,21 +13,14 @@
 
 #include <fstream>  //!< std::ifstream
 #include <iostream>
-
 #include <algorithm>
 #include <iterator>
 #include <sstream>
 #include <string>
 
-void split1(const std::string& str, std::vector<std::string>& cont) {
-  std::istringstream iss(str);
-  std::copy(std::istream_iterator<std::string>(iss),
-            std::istream_iterator<std::string>(), std::back_inserter(cont));
-}
-
 /**
  * @brief Construct a new Data Set:: Data Set object
- *
+ * 
  * @param nameFile Nome do arquivo
  */
 DataSet::DataSet(std::string nameFile) {
@@ -46,17 +39,17 @@ DataSet::DataSet(std::string nameFile) {
 
 /**
  * @brief Destroy the Data Set:: Data Set object
- *
+ * 
  */
 DataSet::~DataSet() {}
 
 /**
- * @brief Obter linha solicitada do texto
- *
- * @param numberLine Número da linha (inicia em 0)
- * @return std::vector<std::string>
+ * @brief 
+ * 
+ * @param numberLine 
+ * @return std::vector<std::string> 
  */
-std::vector<std::string> DataSet::getLine(unsigned int numberLine) {
+std::vector<std::string> DataSet::getLine(unsigned long numberLine) {
   try {
     if (numberLine >= getNumberOfLine()) {
       throw("Valor maior que quantidade de linhas do texto");
@@ -69,10 +62,16 @@ std::vector<std::string> DataSet::getLine(unsigned int numberLine) {
 }
 
 /**
- * @brief obter quantidade de linhas que tem no texto
- *
- * @return unsigned int Número de linhas do texto
+ * @brief 
+ * 
+ * @return unsigned long 
  */
-unsigned int DataSet::getNumberOfLine(void) {
+unsigned long DataSet::getNumberOfLine(void) {
   return text.size();
+}
+
+void DataSet::split1(const std::string& str, std::vector<std::string>& cont) {
+  std::istringstream iss(str);
+  std::copy(std::istream_iterator<std::string>(iss),
+            std::istream_iterator<std::string>(), std::back_inserter(cont));
 }

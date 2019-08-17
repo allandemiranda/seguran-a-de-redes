@@ -24,25 +24,25 @@
  * @param code
  */
 Decrypt::Decrypt(DataSet msg, DataSet alphabet, std::string code) {
-  std::vector<std::vector<char>> mapAlphabet;
-  for (auto i(0); i < alphabet.getLine(0).size(); ++i) {
-    std::vector<char> tempLine;
-    for (auto j(0); j < alphabet.getLine(0).size(); ++j) {
-      auto position = j + i;
-      if (position >= alphabet.getLine(0).size()) {
-        position = position % alphabet.getLine(0).size();
-      }
-      tempLine.push_back(alphabet.getLine(0)[position]);
-    }
-    mapAlphabet.push_back(tempLine);
-  }
+  // std::vector<std::vector<char>> mapAlphabet;
+  // for (auto i(0); i < alphabet.getLine(0).size(); ++i) {
+  //   std::vector<char> tempLine;
+  //   for (auto j(0); j < alphabet.getLine(0).size(); ++j) {
+  //     auto position = j + i;
+  //     if (position >= alphabet.getLine(0).size()) {
+  //       position = position % alphabet.getLine(0).size();
+  //     }
+  //     tempLine.push_back(alphabet.getLine(0)[position]);
+  //   }
+  //   mapAlphabet.push_back(tempLine);
+  // }
 
-  for (int i(0); i < msg.getNumberOfLine(); ++i) {
-    for (int j(0); j < msg.getNumberOfLine(); ++j) {
-      std::cout << msg.getLine(i)[j] << " * ";
-    }
-    std::cout << std::endl;
-  }
+  // for (int i(0); i < msg.getNumberOfLine(); ++i) {
+  //   for (int j(0); j < msg.getNumberOfLine(); ++j) {
+  //     std::cout << msg.getLine(i)[j] << " * ";
+  //   }
+  //   std::cout << std::endl;
+  // }
 }
 
 /**
