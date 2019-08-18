@@ -29,9 +29,9 @@ Decrypt::Decrypt(DataSet msg, DataSet alphabet, std::string code) {
   std::cout << "Crinado mapa do alfabeto ..." << std::endl;
   std::cout << std::endl;
   std::vector<std::vector<char>> mapAlphabet;
-  for (auto i(0); i < alphabet.getLine(0).size(); ++i) {
+  for (unsigned long i(0); i < alphabet.getLine(0).size(); ++i) {
     std::vector<char> tempLine;
-    for (auto j(0); j < alphabet.getLine(0).size(); ++j) {
+    for (unsigned long j(0); j < alphabet.getLine(0).size(); ++j) {
       auto position = j + i;
       if (position >= alphabet.getLine(0).size()) {
         position = position % alphabet.getLine(0).size();
@@ -43,8 +43,8 @@ Decrypt::Decrypt(DataSet msg, DataSet alphabet, std::string code) {
   std::cout << "----------------------------------------------------------"
             << std::endl;
   std::cout << std::endl;
-  for (int i(0); i < mapAlphabet.size(); ++i) {
-    for (int j(0); j < mapAlphabet[i].size(); ++j) {
+  for (unsigned long i(0); i < mapAlphabet.size(); ++i) {
+    for (unsigned long j(0); j < mapAlphabet[i].size(); ++j) {
       std::cout << mapAlphabet[i][j] << " ";
     }
     std::cout << std::endl;
@@ -60,9 +60,9 @@ Decrypt::Decrypt(DataSet msg, DataSet alphabet, std::string code) {
   std::cout << std::endl;
   std::vector<std::string> msgCode;
   auto condNumberPosition = 0;
-  for (auto i(0); i < msg.getNumberOfLine(); ++i) {
+  for (unsigned long i(0); i < msg.getNumberOfLine(); ++i) {
     std::string lineMsgCode;
-    for (auto j(0); j < msg.getLine(i).size(); ++j) {
+    for (unsigned long j(0); j < msg.getLine(i).size(); ++j) {
       if (msg.getLine(i)[j] != ' ') {
         lineMsgCode.push_back(code[condNumberPosition++ % code.size()]);
       } else {
@@ -73,7 +73,7 @@ Decrypt::Decrypt(DataSet msg, DataSet alphabet, std::string code) {
   }
   std::cout << "----------------------------------------------------------"
             << std::endl;
-  for (int i(0); i < msgCode.size(); ++i) {
+  for (unsigned long i(0); i < msgCode.size(); ++i) {
     std::cout << msgCode[i] << std::endl;
   }
   std::cout << "----------------------------------------------------------"
@@ -85,21 +85,23 @@ Decrypt::Decrypt(DataSet msg, DataSet alphabet, std::string code) {
   std::cout << "Mensagem decodificada:" << std::endl;
   std::cout << std::endl;
   std::vector<std::string> msgDecode;
-  for (auto i(0); i < msgCode.size(); ++i) {
+  for (unsigned long i(0); i < msgCode.size(); ++i) {
     std::string lineDecode;
-    for (auto j(0); j < msgCode[i].size(); ++j) {
+    for (unsigned long j(0); j < msgCode[i].size(); ++j) {
       char lookingX = msg.getLine(i)[j];
       if (lookingX == ' ') {
         lineDecode.push_back(' ');
         continue;
       }
       char lookingY = msgCode[i][j];
-      for (auto i(0); i < mapAlphabet[0].size(); ++i) {
+      for (unsigned long i(0); i < mapAlphabet[0].size(); ++i) {
         if (lookingY == mapAlphabet[i][0]) {
-          for (auto j(0); j < mapAlphabet[i].size(); ++j) {
+#pragma omp for
+          for (unsigned long j = 0; j < mapAlphabet[i].size(); ++j) {
             if (lookingX == mapAlphabet[i][j]) {
-              lineDecode.push_back(mapAlphabet[0][j]);
-              break;
+#pragma omp critical
+              { lineDecode.push_back(mapAlphabet[0][j]); }
+#pragma omp cancel for
             }
           }
           break;
@@ -110,7 +112,7 @@ Decrypt::Decrypt(DataSet msg, DataSet alphabet, std::string code) {
   }
   std::cout << "----------------------------------------------------------"
             << std::endl;
-  for (int i(0); i < msgDecode.size(); ++i) {
+  for (unsigned long i(0); i < msgDecode.size(); ++i) {
     std::cout << msgDecode[i] << std::endl;
   }
   std::cout << "----------------------------------------------------------"
