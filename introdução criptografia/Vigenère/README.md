@@ -25,18 +25,18 @@ Para instalar e executar o programa siga as instruções:
 
 2. Adicione o Texto da Mensagem Encriptada no arquivo 'mensagem.txt' da pasta '/data'.
 
-3. Verifique se a pasta '/result' não contem arquivos de resultados anteriores, se existir remova estes arquivos.
-
 4. Execulte o programa: 
 
-Abra o terminal do seu sistema operacional e digite `cd`
+Abra o terminal do seu sistema operacional e digite 
+
+`cd`
 
 `cd seguran-a-de-redes/introdução\ criptografia/Vigenère/`
 
 `./bin/main.o X`
 
-Onde 'X' corresponde ao número inteiro do código de César
+Onde 'X' corresponde ao código ou senha de Vigenère
 
 5. Aguarde até o programa exibir a mensagem de "Descriptografia concluída".
 
-6. Verifique agora os arquivos gerados na pasta '/result'
+6. Verifique o resultado da descriptografia na tela

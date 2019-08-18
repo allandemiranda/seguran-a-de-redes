@@ -17,11 +17,10 @@
 
 class DataSet {
  private:
-  void split1(const std::string&, std::vector<std::string>&);
-  std::vector<std::vector<std::string>> text;  // Texto capturado
+  std::vector<std::string> text;  // Texto capturado
  public:
   unsigned long getNumberOfLine();     // Número de linhas do texto
-  std::vector<std::string> getLine(unsigned long);  // Pegar a linha
+  std::string getLine(unsigned long);  // Pegar a linha
   DataSet(std::string);
   ~DataSet();
 };

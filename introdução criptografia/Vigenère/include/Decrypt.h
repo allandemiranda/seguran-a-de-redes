@@ -1,7 +1,7 @@
 /**
  * @file Decrypt.h
  * @author Allan de Miranda
- * @brief
+ * @brief Descriptografia de dados
  * @version 0.1
  * @date 2019-08-14
  *
@@ -14,18 +14,16 @@
 
 #include <string>
 #include <vector>
+
 #include "DataSet.h"
 
 class Decrypt {
  private:
-  std::vector<std::string> decryptText;
-  std::string code;
-  void setCode(std::string);
+  std::string code;           // Guardar o código
+  void setCode(std::string);  // Gravar código
 
  public:
-  unsigned int getNumberOfLine();     // Número de linhas do texto
-  std::string getLine(unsigned int);  // Pegar a linha
-  std::string getCode();              // Pegar código de César
+  std::string getCode();  // Pegar código
   Decrypt(DataSet, DataSet, std::string);
   ~Decrypt();
 };
