@@ -28,7 +28,9 @@ Para instalar e executar o programa siga as instruções:
 
 4. Execulte o programa: 
 
-Abra o terminal do seu sistema operacional e digite `cd`
+Abra o terminal do seu sistema operacional e digite 
+
+`cd`
 
 `cd seguran-a-de-redes/introdução\ criptografia/Cifra\ de\ César/`
 
