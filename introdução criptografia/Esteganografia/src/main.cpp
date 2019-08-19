@@ -39,7 +39,7 @@ int main(int argc, char const* argv[]) {
   const unsigned int height = image.height();
   const unsigned int width = image.width();
 
-  unsigned long positionMsg = 0;
+  unsigned long positionImg = 0;
 
   bitmap_image image_out(height, width);
 
@@ -48,6 +48,14 @@ int main(int argc, char const* argv[]) {
       rgb_t colour;
       image.get_pixel(x, y, colour);
       
+      if((3*positionImg) <= msg.getMsg().size()){
+        if((positionImg%3)!=2){
+          
+        } else {
+
+        }
+      }
+
       image_out.set_pixel(x, y, colour);
     }
   }
