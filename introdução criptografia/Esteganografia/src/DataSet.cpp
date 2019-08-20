@@ -18,6 +18,11 @@
 #include <sstream>
 #include <string>
 
+/**
+ * @brief Construct a new Data Set:: Data Set object
+ * 
+ * @param fileName Nome do arquivo
+ */
 DataSet::DataSet(std::string fileName) {
   try {
     std::ifstream file(fileName);
@@ -36,8 +41,17 @@ DataSet::DataSet(std::string fileName) {
   }
 }
 
+/**
+ * @brief Destroy the Data Set:: Data Set object
+ * 
+ */
 DataSet::~DataSet() {}
 
+/**
+ * @brief Obter a mensagem gravada
+ * 
+ * @return std::string Mensagem
+ */
 std::string DataSet::getMsg(void) {
   return msg;
 }

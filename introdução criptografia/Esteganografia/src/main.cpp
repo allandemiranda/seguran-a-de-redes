@@ -21,20 +21,34 @@
 #include "bitmap_image.hpp"
 
 int main(int argc, char const* argv[]) {
+  std::cout << std::endl;
+  std::cout << "Lendo arquivo com mensagem ..." << std::endl;
   DataSet msg("data/mensagem.txt");
+  std::cout << std::endl;
   std::string msgBinary;
-  for (unsigned long i(0); i < msg.getMsg().size(); ++i) {
+  std::cout << "Convertendo mensagem em um texto binário ..." << std::endl;
+  for (auto i(0u); i < msg.getMsg().size(); ++i) {
     msgBinary += std::bitset<8>(msg.getMsg()[i]).to_string();
   }
+  std::cout << std::endl;
+  std::cout << "-----------------------------------------------";
+  for (auto i(0u); i < msgBinary.size(); ++i) {
+    if ((i % 50) == 0) {
+      std::cout << std::endl;
+    }
+    std::cout << msgBinary[i];    
+  }
+  std::cout << std::endl;
+  std::cout << "-----------------------------------------------" << std::endl;
+  std::cout << std::endl;
 
   std::string file_name(argv[1]);
-  // bitmap_image image(file_name);
-  bitmap_image image("data/image.bmp");
+  std::cout << "Verificanod imagem " << file_name << " ..." << std::endl;
+  bitmap_image image(file_name);
   if (!image) {
     printf("Error - Failed to open '%s'\n", file_name.c_str());
     return 0;
   }
-  unsigned int total_number_of_pixels = 0;
 
   const unsigned int height = image.height();
   const unsigned int width = image.width();
@@ -43,24 +57,55 @@ int main(int argc, char const* argv[]) {
 
   bitmap_image image_out(height, width);
 
+  std::cout << std::endl;
+  std::cout << "Criptografando mensagem na imagem ..." << std::endl;
   for (std::size_t y = 0; y < height; ++y) {
     for (std::size_t x = 0; x < width; ++x) {
       rgb_t colour;
       image.get_pixel(x, y, colour);
-      
-      if((3*positionImg) <= msg.getMsg().size()){
-        if((positionImg%3)!=2){
-          
-        } else {
 
+      if ((3 * positionImg) <= msg.getMsg().size()) {
+        if ((positionImg % 3) != 2) {
+          std::bitset<8> red = std::bitset<8>(colour.red);
+          if (red[0] != msg.getMsg()[((3 * positionImg) + 0)]) {
+            red.flip(0);
+          }
+          colour.red = red.to_ullong();
+          std::bitset<8> green = std::bitset<8>(colour.green);
+          if (green[0] != msg.getMsg()[((3 * positionImg) + 1)]) {
+            green.flip(0);
+          }
+          colour.green = green.to_ullong();
+
+          std::bitset<8> blue = std::bitset<8>(colour.blue);
+          if (blue[0] != msg.getMsg()[((3 * positionImg) + 1)]) {
+            blue.flip(0);
+          }
+          colour.blue = blue.to_ullong();
+        } else {
+          std::bitset<8> red = std::bitset<8>(colour.red);
+          if (red[0] != msg.getMsg()[((3 * positionImg) + 0)]) {
+            red.flip(0);
+          }
+
+          colour.red = red.to_ullong();
+          std::bitset<8> green = std::bitset<8>(colour.green);
+          if (green[0] != msg.getMsg()[((3 * positionImg) + 1)]) {
+            green.flip(0);
+          }
+          colour.green = green.to_ullong();
         }
       }
-
+      ++positionImg;
       image_out.set_pixel(x, y, colour);
     }
   }
 
-  image_out.save_image("key.bmp");
+  std::cout << std::endl;
+  image_out.save_image("result/key.bmp");
+  std::cout << "Imagem com a mensagem disponível em 'result/key.bmp' !"
+            << std::endl;
+  std::cout << std::endl;
 
   return 0;
 }
