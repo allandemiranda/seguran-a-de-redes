@@ -36,7 +36,7 @@ int main(int argc, char const* argv[]) {
     if ((i % 50) == 0) {
       std::cout << std::endl;
     }
-    std::cout << msgBinary[i];    
+    std::cout << msgBinary[i];
   }
   std::cout << std::endl;
   std::cout << "-----------------------------------------------" << std::endl;
@@ -52,6 +52,12 @@ int main(int argc, char const* argv[]) {
 
   const unsigned int height = image.height();
   const unsigned int width = image.width();
+
+  if ((msg.getMsg().size() * 3) >= (height * width)) {
+    std::cout << "Imagem não possui tamanho suficiente para guardar mensagem !"
+              << std::endl;
+    return 0;
+  }
 
   unsigned long positionImg = 0;
 
