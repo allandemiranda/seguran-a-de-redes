@@ -50,35 +50,43 @@ int main(void) {
 
         std::bitset<8> blue = std::bitset<8>(colour.blue);
         mensagem.push_back(blue[0]);
+
+        std::cout << red[0] << green[0] << blue[0];
       } else {
         std::bitset<8> red = std::bitset<8>(colour.red);
         mensagem.push_back(red[0]);
 
         std::bitset<8> green = std::bitset<8>(colour.green);
         mensagem.push_back(green[0]);
+
+        std::cout << red[0] << green[0];
       }
       ++positionImg;
-    }
-  }
 
-  std::cout << std::endl;
-  std::cout << "Convertendo de binário para texto ..." << std::endl;  
-
-  std::string msgFinal;
-
-  for (auto i(0u); i < (mensagem.size() / 8); ++i) {
-    std::bitset<8> letra;
-    for (auto j(8); j >= 0; --j) {
-      if (mensagem[(i * 8) + j] == 1) {
-        letra.set(std::abs(j - 8));
+      if(positionImg == 1000){
+        return 0;
       }
     }
-    std::cout << (char)letra.to_ulong() << std::endl;
-    msgFinal += letra.to_string();
   }
 
-  std::cout << std::endl;
-  std::cout << msgFinal << std::endl;
+  // std::cout << std::endl;
+  // std::cout << "Convertendo de binário para texto ..." << std::endl;  
+
+  // std::string msgFinal;
+
+  // for (auto i(0u); i < (mensagem.size() / 8); ++i) {
+  //   std::bitset<8> letra;
+  //   for (auto j(8); j >= 0; --j) {
+  //     if (mensagem[(i * 8) + j] == 1) {
+  //       //letra.set(std::abs(j - 8));
+  //       std::cout << mensagem[(i * 8) + j];
+  //     }
+  //   }
+  //   msgFinal += letra.to_string();
+  // }
+
+  // std::cout << std::endl;
+  // std::cout << msgFinal << std::endl;
 
   return 0;
 }
