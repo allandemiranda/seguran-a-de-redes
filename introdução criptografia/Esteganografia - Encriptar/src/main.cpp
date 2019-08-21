@@ -64,7 +64,7 @@ int main(int argc, char const* argv[]) {
   auto vectorPosition(0u);
   auto bitsetPositionAll(0u);
 
-  bitmap_image image_out(height, width);
+  bitmap_image image_out(width,height);
 
   std::cout << std::endl;
   std::cout << "Criptografando mensagem na imagem ... " << std::endl;

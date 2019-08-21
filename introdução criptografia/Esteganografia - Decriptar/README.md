@@ -40,7 +40,7 @@ Abra o terminal do seu sistema operacional e digite
 
 `./bin/main.o X`
 
-Onde 'X' corresponde ao caminho do arquivo de imagem de formato .bmp que deseja decriptar a mensagem
+Onde 'X' corresponde ao caminho do arquivo de imagem de formato .bmp (Bitmap) que deseja decriptar a mensagem
 
 3. Aguarde até o programa exibir a mensagem de "Mensagem Decriptada na Imagem".
 

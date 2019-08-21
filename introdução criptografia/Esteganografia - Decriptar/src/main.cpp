@@ -35,7 +35,7 @@ int main(int argc, char const* argv[]) {
   std::vector<std::bitset<8>> msgBinary;
   std::bitset<8> caracter;
 
-  auto vectorPosition(0u);
+  // auto vectorPosition(0u);
 
   std::cout << std::endl;
   std::cout << "Retirando mensagem em binário da imagem ..." << std::endl;
@@ -51,10 +51,10 @@ int main(int argc, char const* argv[]) {
         if (red[0] == 1) {
           caracter.set(bitsetPositionTrue);
         }
-        if (vectorPosition < 130) {
-          std::cout << "[" << vectorPosition << "] "
-                    << " PX*" << ((y * width) + x) << " R->" << red[0];
-        }
+        // if (vectorPosition <= 130) {
+        //   std::cout << "[" << vectorPosition << "] "
+        //             << " PX*" << ((y * width) + x) << " R->" << red[0];
+        // }
         ++bitsetPositionAll;
         bitsetPositionTrue = (bitsetPositionAll % 8);
 
@@ -62,9 +62,9 @@ int main(int argc, char const* argv[]) {
         if (green[0] == 1) {
           caracter.set(bitsetPositionTrue);
         }
-        if (vectorPosition < 130) {
-          std::cout << " G->" << green[0];
-        }
+        // if (vectorPosition <= 130) {
+        //   std::cout << " G->" << green[0];
+        // }
         ++bitsetPositionAll;
         bitsetPositionTrue = (bitsetPositionAll % 8);
 
@@ -72,9 +72,9 @@ int main(int argc, char const* argv[]) {
         if (blue[0] == 1) {
           caracter.set(bitsetPositionTrue);
         }
-        if (vectorPosition < 130) {
-          std::cout << " B->" << blue[0];
-        }
+        // if (vectorPosition <= 130) {
+        //   std::cout << " B->" << blue[0];
+        // }
         ++bitsetPositionAll;
       }
       if (bitsetPositionTrue == 3) {
@@ -82,9 +82,9 @@ int main(int argc, char const* argv[]) {
         if (red[0] == 1) {
           caracter.set(bitsetPositionTrue);
         }
-        if (vectorPosition < 130) {
-          std::cout << " PX*" << ((y * width) + x) << " R->" << red[0];
-        }
+        // if (vectorPosition <= 130) {
+        //   std::cout << " PX*" << ((y * width) + x) << " R->" << red[0];
+        // }
         ++bitsetPositionAll;
         bitsetPositionTrue = (bitsetPositionAll % 8);
 
@@ -92,9 +92,9 @@ int main(int argc, char const* argv[]) {
         if (green[0] == 1) {
           caracter.set(bitsetPositionTrue);
         }
-        if (vectorPosition < 130) {
-          std::cout << " G->" << green[0];
-        }
+        // if (vectorPosition <= 130) {
+        //   std::cout << " G->" << green[0];
+        // }
         ++bitsetPositionAll;
         bitsetPositionTrue = (bitsetPositionAll % 8);
 
@@ -102,9 +102,9 @@ int main(int argc, char const* argv[]) {
         if (blue[0] == 1) {
           caracter.set(bitsetPositionTrue);
         }
-        if (vectorPosition < 130) {
-          std::cout << " B->" << blue[0];
-        }
+        // if (vectorPosition <= 130) {
+        //   std::cout << " B->" << blue[0];
+        // }
         ++bitsetPositionAll;
       }
       if (bitsetPositionTrue == 6) {
@@ -112,9 +112,9 @@ int main(int argc, char const* argv[]) {
         if (red[0] == 1) {
           caracter.set(bitsetPositionTrue);
         }
-        if (vectorPosition < 130) {
-          std::cout << " PX*" << ((y * width) + x) << " R->" << red[0];
-        }
+        // if (vectorPosition <= 130) {
+        //   std::cout << " PX*" << ((y * width) + x) << " R->" << red[0];
+        // }
         ++bitsetPositionAll;
         bitsetPositionTrue = (bitsetPositionAll % 8);
 
@@ -122,10 +122,10 @@ int main(int argc, char const* argv[]) {
         if (green[0] == 1) {
           caracter.set(bitsetPositionTrue);
         }
-        if (vectorPosition < 130) {
-          std::cout << " G->" << green[0] << std::endl;
-        }
-        vectorPosition++;
+        // if (vectorPosition <= 130) {
+        //   std::cout << " G->" << green[0] << std::endl;
+        // }
+        // vectorPosition++;
         ++bitsetPositionAll;
         msgBinary.push_back(caracter);
         caracter.reset();
