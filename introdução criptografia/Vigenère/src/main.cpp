@@ -23,7 +23,7 @@ int main(int argc, char const* argv[]) {
   DataSet mensagem("data/mensagem.txt");
   std::cout << "----------------------------------------------------------"
             << std::endl;
-  for (unsigned long i(0); i < mensagem.getNumberOfLine(); ++i) {
+  for (auto i(0u); i < mensagem.getNumberOfLine(); ++i) {
     std::cout << mensagem.getLine(i) << std::endl;
   }
   std::cout << "----------------------------------------------------------"
@@ -37,7 +37,7 @@ int main(int argc, char const* argv[]) {
   std::cout << std::endl;
   std::cout << "----------------------------------------------------------"
             << std::endl;
-  for (unsigned long i(0); i < alfabeto.getNumberOfLine(); ++i) {
+  for (auto i(0u); i < alfabeto.getNumberOfLine(); ++i) {
     std::cout << alfabeto.getLine(i) << std::endl;
   }
   std::cout << "----------------------------------------------------------"
