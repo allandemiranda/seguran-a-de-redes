@@ -31,62 +31,136 @@ int main(void) {
   const unsigned int height = image.height();
   const unsigned int width = image.width();
 
-  unsigned long positionImg = 0;
-  std::string mensagem;
+  auto bitsetPositionAll(0u);
+  std::vector<std::bitset<8>> msgBinary;
+  std::bitset<8> caracter;
+
+  auto vectorPosition(0u);
 
   std::cout << std::endl;
   std::cout << "Retirando mensagem em binário da imagem ..." << std::endl;
+  std::cout << std::endl;
   for (std::size_t y = 0; y < height; ++y) {
     for (std::size_t x = 0; x < width; ++x) {
       rgb_t colour;
       image.get_pixel(x, y, colour);
+      auto bitsetPositionTrue(bitsetPositionAll % 8);
 
-      if ((positionImg % 3) != 2) {
+      if (bitsetPositionTrue == 0) {
         std::bitset<8> red = std::bitset<8>(colour.red);
-        mensagem.push_back(red[0]);
+        if (red[0] == 1) {
+          caracter.set(bitsetPositionTrue);
+        }
+        if (vectorPosition < 130) {
+          std::cout << "[" << vectorPosition << "] "
+                    << " PX*" << ((y * width) + x) << " R->" << red[0];
+        }
+        ++bitsetPositionAll;
+        bitsetPositionTrue = (bitsetPositionAll % 8);
 
         std::bitset<8> green = std::bitset<8>(colour.green);
-        mensagem.push_back(green[0]);
+        if (green[0] == 1) {
+          caracter.set(bitsetPositionTrue);
+        }
+        if (vectorPosition < 130) {
+          std::cout << " G->" << green[0];
+        }
+        ++bitsetPositionAll;
+        bitsetPositionTrue = (bitsetPositionAll % 8);
 
         std::bitset<8> blue = std::bitset<8>(colour.blue);
-        mensagem.push_back(blue[0]);
-
-        std::cout << red[0] << green[0] << blue[0];
-      } else {
+        if (blue[0] == 1) {
+          caracter.set(bitsetPositionTrue);
+        }
+        if (vectorPosition < 130) {
+          std::cout << " B->" << blue[0];
+        }
+        ++bitsetPositionAll;
+      }
+      if (bitsetPositionTrue == 3) {
         std::bitset<8> red = std::bitset<8>(colour.red);
-        mensagem.push_back(red[0]);
+        if (red[0] == 1) {
+          caracter.set(bitsetPositionTrue);
+        }
+        if (vectorPosition < 130) {
+          std::cout << " PX*" << ((y * width) + x) << " R->" << red[0];
+        }
+        ++bitsetPositionAll;
+        bitsetPositionTrue = (bitsetPositionAll % 8);
 
         std::bitset<8> green = std::bitset<8>(colour.green);
-        mensagem.push_back(green[0]);
+        if (green[0] == 1) {
+          caracter.set(bitsetPositionTrue);
+        }
+        if (vectorPosition < 130) {
+          std::cout << " G->" << green[0];
+        }
+        ++bitsetPositionAll;
+        bitsetPositionTrue = (bitsetPositionAll % 8);
 
-        std::cout << red[0] << green[0];
+        std::bitset<8> blue = std::bitset<8>(colour.blue);
+        if (blue[0] == 1) {
+          caracter.set(bitsetPositionTrue);
+        }
+        if (vectorPosition < 130) {
+          std::cout << " B->" << blue[0];
+        }
+        ++bitsetPositionAll;
       }
-      ++positionImg;
+      if (bitsetPositionTrue == 6) {
+        std::bitset<8> red = std::bitset<8>(colour.red);
+        if (red[0] == 1) {
+          caracter.set(bitsetPositionTrue);
+        }
+        if (vectorPosition < 130) {
+          std::cout << " PX*" << ((y * width) + x) << " R->" << red[0];
+        }
+        ++bitsetPositionAll;
+        bitsetPositionTrue = (bitsetPositionAll % 8);
 
-      if(positionImg == 1000){
-        return 0;
+        std::bitset<8> green = std::bitset<8>(colour.green);
+        if (green[0] == 1) {
+          caracter.set(bitsetPositionTrue);
+        }
+        if (vectorPosition < 130) {
+          std::cout << " G->" << green[0] << std::endl;
+        }
+        vectorPosition++;
+        ++bitsetPositionAll;
+        msgBinary.push_back(caracter);
+        caracter.reset();
       }
     }
   }
+  std::cout << std::endl;
+  std::cout << "----------------------------" << std::endl;
+  std::cout << std::endl;
+  for (auto i(0u); i < 130; ++i) {
+    std::cout << msgBinary[i] << " ";
+  }
+  std::cout << std::endl;
+  std::cout << "----------------------------" << std::endl;
+  std::cout << std::endl;
 
-  // std::cout << std::endl;
-  // std::cout << "Convertendo de binário para texto ..." << std::endl;  
+  std::cout << "Convertendo de binário para texto ..." << std::endl;
 
-  // std::string msgFinal;
+  std::string msgFinal;
 
-  // for (auto i(0u); i < (mensagem.size() / 8); ++i) {
-  //   std::bitset<8> letra;
-  //   for (auto j(8); j >= 0; --j) {
-  //     if (mensagem[(i * 8) + j] == 1) {
-  //       //letra.set(std::abs(j - 8));
-  //       std::cout << mensagem[(i * 8) + j];
-  //     }
-  //   }
-  //   msgFinal += letra.to_string();
-  // }
+  for (auto i(0u); i < msgBinary.size(); ++i) {
+    unsigned long j = msgBinary[i].to_ulong();
+    unsigned char c = static_cast<unsigned char>(j);
+    msgFinal.push_back(c);
+  }
 
-  // std::cout << std::endl;
-  // std::cout << msgFinal << std::endl;
+  std::ofstream newFile;
+  std::string fileName = "result/keyMsg.txt";
+  newFile.open(fileName, std::ios::app);
+  newFile << msgFinal << std::endl;
+  newFile.close();
 
+  std::cout << std::endl;
+  std::cout << "Mensagem final disponível em Resultados" << std::endl;
+  std::cout << std::endl;
+  
   return 0;
 }

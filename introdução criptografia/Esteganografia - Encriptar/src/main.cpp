@@ -78,62 +78,78 @@ int main(int argc, char const* argv[]) {
       if (vectorPosition < msgBinary.size()) {
         if (bitsetPositionTrue == 0) {
           std::bitset<8> red = std::bitset<8>(colour.red);
+          std::cout << " [" << vectorPosition << "] "
+                    << " PX*" << ((y * width) + x) << " R(" << red[0] << ")->";
           if (red[0] != msgBinary[vectorPosition][0]) {
             red.flip(0);
           }
-          std::cout << "[" << vectorPosition << "] "
-                    << " PX*" << ((y * width) + x) << " R->" << red[0];
+          colour.red = red.to_ulong();
+          std::cout << red[0];
           ++bitsetPositionAll;
-        
+
           std::bitset<8> green = std::bitset<8>(colour.green);
+          std::cout << " G(" << green[0] << ")->";
           if (green[0] != msgBinary[vectorPosition][1]) {
             green.flip(0);
           }
-          std::cout << " G->" << green[0];
+          colour.green = green.to_ulong();
+          std::cout << green[0];
           ++bitsetPositionAll;
-        
+
           std::bitset<8> blue = std::bitset<8>(colour.blue);
+          std::cout << " B(" << blue[0] << ")->";
           if (blue[0] != msgBinary[vectorPosition][2]) {
             blue.flip(0);
           }
-          std::cout << " B->" << blue[0];
+          colour.blue = blue.to_ulong();
+          std::cout << blue[0];
           ++bitsetPositionAll;
         }
         if (bitsetPositionTrue == 3) {
           std::bitset<8> red = std::bitset<8>(colour.red);
+          std::cout << " PX*" << ((y * width) + x) << " R(" << red[0] << ")->";
           if (red[4] != msgBinary[vectorPosition][3]) {
             red.flip(0);
           }
-          std::cout << " PX*" << ((y * width) + x) << " R->" << red[0];
+          colour.red = red.to_ulong();
+          std::cout << red[0];
           ++bitsetPositionAll;
-        
+
           std::bitset<8> green = std::bitset<8>(colour.green);
+          std::cout << " G(" << green[0] << ")->";
           if (green[0] != msgBinary[vectorPosition][4]) {
             green.flip(0);
           }
-          std::cout << " G->" << green[0];
+          colour.green = green.to_ulong();
+          std::cout << green[0];
           ++bitsetPositionAll;
-        
+
           std::bitset<8> blue = std::bitset<8>(colour.blue);
+          std::cout << " B(" << blue[0] << ")->";
           if (blue[0] != msgBinary[vectorPosition][5]) {
             blue.flip(0);
           }
-          std::cout << " B->" << blue[0];
+          colour.blue = blue.to_ulong();
+          std::cout << blue[0];
           ++bitsetPositionAll;
         }
         if (bitsetPositionTrue == 6) {
           std::bitset<8> red = std::bitset<8>(colour.red);
+          std::cout << " PX*" << ((y * width) + x) << " R(" << red[0] << ")->";
           if (red[4] != msgBinary[vectorPosition][6]) {
             red.flip(0);
           }
-          std::cout << " PX*" << ((y * width) + x) << " R->" << red[0];
+          colour.red = red.to_ulong();
+          std::cout << red[0];
           ++bitsetPositionAll;
-        
+
           std::bitset<8> green = std::bitset<8>(colour.green);
+          std::cout << " G(" << green[0] << ")->";
           if (green[0] != msgBinary[vectorPosition][7]) {
             green.flip(0);
           }
-          std::cout << " G->" << green[0] << std::endl;
+          colour.green = green.to_ulong();
+          std::cout << green[0] << std::endl;
           ++bitsetPositionAll;
           ++vectorPosition;
         }
