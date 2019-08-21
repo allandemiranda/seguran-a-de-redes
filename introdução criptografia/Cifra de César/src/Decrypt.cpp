@@ -9,7 +9,7 @@
  *
  */
 
-#include "../include/Decrypt.h"
+#include "Decrypt.h"
 
 #include <cmath>
 #include <iostream>
@@ -24,9 +24,10 @@
 Decrypt::Decrypt(DataSet msg, DataSet alphabet, unsigned long code) {
   setCode(code);
 
-  for (unsigned long i(0); i < msg.getNumberOfLine(); ++i) {
+  for (auto i(0u); i < msg.getNumberOfLine(); ++i) {
     std::string newLineDecrypt = "";
-    for (unsigned long j(0); j < msg.getLine(i).size(); ++j) {
+    for (auto j(0u); j < msg.getLine(i).size(); ++j) {
+      bool foraDOalfabeto = true;
 #pragma omp parallel
       {
 #pragma omp for
@@ -39,9 +40,13 @@ Decrypt::Decrypt(DataSet msg, DataSet alphabet, unsigned long code) {
                 position = alphabet.getLine(0).size() + position;
               }
               newLineDecrypt = newLineDecrypt + alphabet.getLine(0)[position];
+              foraDOalfabeto = false;
             }
 #pragma omp cancel for
           }
+        }
+        if(foraDOalfabeto){
+          newLineDecrypt = newLineDecrypt + msg.getLine(i)[j];
         }
       }
     }

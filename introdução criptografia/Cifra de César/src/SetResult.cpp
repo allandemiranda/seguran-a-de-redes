@@ -9,7 +9,7 @@
  *
  */
 
-#include "../include/SetResult.h"
+#include "SetResult.h"
 
 #include <fstream>  // std::ifstream, std::ofstream
 #include <iostream>
@@ -25,8 +25,7 @@ SetResult::SetResult(Decrypt text) {
   std::ofstream newFile;
   std::string fileName = "result/" + std::to_string(text.getCode()) + ".txt";
   newFile.open(fileName, std::ios::app);
-  for (unsigned long i(0); i < text.getNumberOfLine(); ++i) {
-    // std::cout << text.getLine(i) << std::endl;
+  for (auto i(0u); i < text.getNumberOfLine(); ++i) {
     newFile << text.getLine(i) << std::endl;
   }
   newFile.close();

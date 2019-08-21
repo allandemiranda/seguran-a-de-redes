@@ -9,7 +9,7 @@
  *
  */
 
-#include "../include/DataSet.h"
+#include "DataSet.h"
 
 #include <fstream>  //!< std::ifstream
 #include <iostream>
