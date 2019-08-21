@@ -19,8 +19,8 @@
 
 #include "bitmap_image.hpp"
 
-int main(void) {
-  std::string file_name("data/key.bmp");
+int main(int argc, char const* argv[]) {
+  std::string file_name(argv[1]);
   std::cout << "Verificanod imagem " << file_name << " ..." << std::endl;
   bitmap_image image(file_name);
   if (!image) {
@@ -159,8 +159,8 @@ int main(void) {
   newFile.close();
 
   std::cout << std::endl;
-  std::cout << "Mensagem final disponível em Resultados" << std::endl;
+  std::cout << "Mensagem final disponível em result/keyMsg.txt" << std::endl;
   std::cout << std::endl;
-  
+
   return 0;
 }
