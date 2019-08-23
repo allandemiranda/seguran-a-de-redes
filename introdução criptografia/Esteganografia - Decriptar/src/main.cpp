@@ -128,7 +128,6 @@ int main(int argc, char const* argv[]) {
         // vectorPosition++;
         ++bitsetPositionAll;
         if (caracter.to_string() == "00000011") {
-          std::cout << "ALLAN" << std::endl;
           break;
         }
         msgBinary.push_back(caracter);
@@ -136,7 +135,6 @@ int main(int argc, char const* argv[]) {
       }
     }
     if (caracter.to_string() == "00000011") {
-      std::cout << "ALLAN" << std::endl;
       break;
     }
   }
