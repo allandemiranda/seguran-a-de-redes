@@ -35,6 +35,11 @@ int main(int argc, char const* argv[]) {
               << std::bitset<8>(msg.getMsg()[i]).to_string() << std::endl;
     msgBinary.push_back(std::bitset<8>(msg.getMsg()[i]));
   }
+  std::bitset<8> endTxt;
+  endTxt.set(0);
+  endTxt.set(1);
+  msgBinary.push_back(endTxt);
+
   std::cout << std::endl;
   std::cout << "-----------------------------------------------" << std::endl;
   for (auto i(0u); i < msgBinary.size(); ++i) {
