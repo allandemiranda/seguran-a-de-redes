@@ -63,10 +63,20 @@ Decrypt::Decrypt(DataSet msg, DataSet alphabet, std::string code) {
   for (auto i(0u); i < msg.getNumberOfLine(); ++i) {
     std::string lineMsgCode;
     for (auto j(0u); j < msg.getLine(i).size(); ++j) {
-      if (msg.getLine(i)[j] != ' ') {
-        lineMsgCode.push_back(code[condNumberPosition++ % code.size()]);
-      } else {
-        lineMsgCode.push_back(' ');
+      bool flag_not = true;
+#pragma omp for
+      for (unsigned long k = 0; k<mapAlphabet[0].size(); ++k){
+        if (msg.getLine(i)[j] == mapAlphabet[0][k]){
+#pragma omp critical
+          { 
+            flag_not = false;
+            lineMsgCode.push_back(code[condNumberPosition++ % code.size()]);
+          }
+#pragma omp cancel for
+        }
+      }
+      if(flag_not){
+        lineMsgCode.push_back(msg.getLine(i)[j]);
       }
     }
     msgCode.push_back(lineMsgCode);
@@ -89,23 +99,26 @@ Decrypt::Decrypt(DataSet msg, DataSet alphabet, std::string code) {
     std::string lineDecode;
     for (auto j(0u); j < msgCode[i].size(); ++j) {
       char lookingX = msg.getLine(i)[j];
-      if (lookingX == ' ') {
-        lineDecode.push_back(' ');
-        continue;
-      }
+      bool flag_not = true;
       char lookingY = msgCode[i][j];
-      for (auto i(0u); i < mapAlphabet[0].size(); ++i) {
+      for (auto i(0u); i < mapAlphabet[0].size(); ++i) {        
         if (lookingY == mapAlphabet[i][0]) {
 #pragma omp for
           for (unsigned long j = 0; j < mapAlphabet[i].size(); ++j) {
             if (lookingX == mapAlphabet[i][j]) {
 #pragma omp critical
-              { lineDecode.push_back(mapAlphabet[0][j]); }
+              { 
+                lineDecode.push_back(mapAlphabet[0][j]); 
+                flag_not = false;
+              }
 #pragma omp cancel for
             }
           }
           break;
-        }
+        }        
+      }
+      if(flag_not){
+        lineDecode.push_back(lookingY);
       }
     }
     msgDecode.push_back(lineDecode);
