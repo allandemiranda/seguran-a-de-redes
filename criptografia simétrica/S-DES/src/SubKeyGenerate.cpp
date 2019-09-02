@@ -35,11 +35,27 @@ SubKeyGenerate::SubKeyGenerate(std::string keyPath, unsigned long nodes,
   if (pSecond != "") {
     PSecond = pSecond;
   }
-  masterKey = getMasterKey(keyPath);
+  masterKey = getMasterKey(masterKeyPath);
   PMasterVector = explode(PMaster);
   PSecondVector = explode(PSecond);
+  if (!checkPVector(masterKey.size(), PMasterVector)) {
+    throw "Incompatibilidade entre o tamanho da chave e a configuração de criação";
+  }
+  if (!checkPVector(masterKey.size(), PSecondVector)) {
+    throw "Incompatibilidade entre o tamanho da chave e a configuração de criação";
+  }
+  masterKey = manipulateP(masterKey, PMasterVector);
+  for (auto i(0u); i < numberOfNodes; ++i) {
+    masterKey =
+        LS((i + 1), keyLeft(masterKey)) + LS((i + 1), keyRight(masterKey));
+    subKeys.push_back(manipulateP(masterKey, PSecondVector));
+  }
 }
 
+/**
+ * @brief Destroy the Sub Key Generate:: Sub Key Generate object
+ *
+ */
 SubKeyGenerate::~SubKeyGenerate() {}
 
 /**
@@ -53,8 +69,10 @@ std::string SubKeyGenerate::getMasterKey(std::string keyPath) {
   try {
     std::ifstream file(keyPath);
     std::string line;
-    std::getline(file, line);
-    key = line;
+    while (std::getline(file, line)) {
+      key = line;
+      break;
+    }
   } catch (const std::ios_base::failure& e) {
     std::cerr << "Erro ao abrir a chave" << std::endl;
   }
@@ -98,8 +116,70 @@ const std::vector<unsigned long> SubKeyGenerate::explode(const std::string& P) {
 bool SubKeyGenerate::checkPVector(unsigned long nSize,
                                   std::vector<unsigned long>& Pvector) {
   for (unsigned long i = 0; i < Pvector.size(); ++i) {
-    if ((Pvector[i] < 0) or (Pvector[i] >= nSize)) {
-      throw "Incompatibilidade entre o tamanho da chave e configuração de criação";
+    if (Pvector[i] > nSize) {
+      return false;
     }
   }
+  return true;
+}
+
+/**
+ * @brief Função para fazer a manitupação da chave
+ *
+ * @param key Chave inicial
+ * @param P Vetor com a sequência de manipulação
+ * @return std::string Chave final manipulada
+ */
+std::string SubKeyGenerate::manipulateP(std::string& key,
+                                        std::vector<unsigned long>& P) {
+  std::string newKey;
+  for (unsigned long n : P) {
+    newKey.push_back(key[n - 1]);
+  }
+  return newKey;
+}
+
+/**
+ * @brief Função para dividir a Chave do lado esquerdo
+ *
+ * @param key Chave principal
+ * @return std::string Chave do lado esquerdo
+ */
+std::string SubKeyGenerate::keyLeft(std::string key) {
+  std::string newKeyLeft;
+  for (auto i(0u); i < (key.size() / 2); ++i) {
+    newKeyLeft.push_back(key[i]);
+  }
+  return newKeyLeft;
+}
+
+/**
+ * @brief Função para dividir a chave do lado direito
+ *
+ * @param key Chave princial
+ * @return std::string Chave do lado direito
+ */
+std::string SubKeyGenerate::keyRight(std::string key) {
+  std::string newKeyRight;
+  for (auto i(key.size() / 2); i < key.size(); ++i) {
+    newKeyRight.push_back(key[i]);
+  }
+  return newKeyRight;
+}
+
+/**
+ * @brief Função para mover o código para esquerda
+ *
+ * @param repetition Quantridade de trocas
+ * @param key Chave de entrada
+ * @return std::string Chave de saída
+ */
+std::string SubKeyGenerate::LS(unsigned long repetition, std::string key) {
+  std::string newKey = key;
+  for (auto i(0u); i < repetition; ++i) {
+    std::string lastW(1, newKey.back());
+    newKey.insert(0, lastW);
+    newKey.pop_back();
+  }
+  return newKey;
 }

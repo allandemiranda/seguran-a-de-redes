@@ -21,8 +21,11 @@ int main(int argc, char const* argv[]) {
   //   std::cerr << msg << std::endl;
   // }
 
-
-  SubKeyGenerate novo("",0,"","");
+  // try {
+  //   SubKeyGenerate novo("", 0, "", "");
+  // } catch (const char* msg) {
+  //   std::cerr << msg << std::endl;
+  // }
 
   return 0;
 }

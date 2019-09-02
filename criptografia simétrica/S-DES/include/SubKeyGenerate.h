@@ -28,6 +28,10 @@ class SubKeyGenerate {
   std::vector<unsigned long> PSecondVector;
   const std::vector<unsigned long> explode(const std::string&);
   bool checkPVector(unsigned long, std::vector<unsigned long>&);
+  std::string manipulateP(std::string&, std::vector<unsigned long>&);
+  std::string keyLeft(std::string);
+  std::string keyRight(std::string);
+  std::string LS(unsigned long, std::string);
 
  public:
   std::vector<std::string> subKeys;  // Sub chaves finais ordenadas
