@@ -1,18 +1,28 @@
 /**
  * @file main.cpp
  * @author Allan de Miranda
- * @brief 
+ * @brief
  * @version 0.1
  * @date 2019-08-30
- * 
+ *
  * @copyright Copyright (c) 2019
- * 
+ *
  */
 
 #include "KeyGenerate.h"
+#include "SubKeyGenerate.h"
 
-int main(int argc, char const *argv[])
-{
-    
-    return 0;
+#include <iostream>
+
+int main(int argc, char const* argv[]) {
+  // try {
+  //   KeyGenerate novaChave(10, "");
+  // } catch (const char* msg) {
+  //   std::cerr << msg << std::endl;
+  // }
+
+
+  SubKeyGenerate novo("",0,"","");
+
+  return 0;
 }

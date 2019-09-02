@@ -15,14 +15,53 @@
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
+#include <iostream>
 #include <string>
 
 /**
  * @brief Construct a new Key Generate:: Key Generate object
  *
  * @param keySize Tamanho da chake em bit's a ser gerada
+ * @param optionPath Configuração avançada de local para salvar chave gerada
  */
-KeyGenerate::KeyGenerate(unsigned long keySize) {
+KeyGenerate::KeyGenerate(unsigned long keySize, std::string optionPath) {
+  if (optionPath != "") {
+    keySavePath = optionPath;
+  }
+  createKeyFile(createKeyMaster(keySize), keySavePath);
+}
+
+/**
+ * @brief Destroy the Key Generate:: Key Generate object
+ *
+ */
+KeyGenerate::~KeyGenerate() {}
+
+/**
+ * @brief função para verficar se a chave solicitada está no tamanho correto
+ *
+ * @param newkeySize Tamanho da chave solicitada
+ * @return true Tamanho correto
+ * @return false Tamanho errado
+ */
+bool KeyGenerate::checkKeySize(unsigned long newKeySize) {
+  if (newKeySize % 2 != 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/**
+ * @brief Função de criação da chave principal
+ *
+ * @param newKeySize Tamanho da chave
+ * @return std::string
+ */
+std::string KeyGenerate::createKeyMaster(unsigned long newKeySize) {
+  if (!checkKeySize(newKeySize)) {
+    throw "O tamanho da chave deve sempre ser um número par";
+  }
   std::time_t time = std::time(NULL);  // Hora do sistema
   std::string timeString =
       std::asctime(std::localtime(&time));  // Transformar data em string
@@ -30,7 +69,7 @@ KeyGenerate::KeyGenerate(unsigned long keySize) {
       timeString.size();  // Tamanho da string da data
   std::string key;        // Chave final
   std::srand(std::time(nullptr));
-  for (auto i(0u); i < keySize; ++i) {
+  for (auto i(0u); i < newKeySize; ++i) {
     unsigned long positionDate =
         std::rand() / ((RAND_MAX + 1u) /
                        timeStringSize);  // Pegar uma posição aleatória da data
@@ -40,17 +79,26 @@ KeyGenerate::KeyGenerate(unsigned long keySize) {
     key.push_back(
         std::bitset<8>(timeString[positionDate]).to_string()[positionBit]);
   }
-  std::ofstream newFile;
-  keySavePath += "KEY.sdes";
-  newFile.open(keySavePath, std::ios::app);
-  for (char n : key) {
-    newFile << n;
-  }
-  newFile.close();
+  return key;
 }
 
 /**
- * @brief Destroy the Key Generate:: Key Generate object
+ * @brief Função para criar arquivo com a chave principal
  *
+ * @param keyMaster Chave principal
+ * @param keyPath Local onde salvar chave
  */
-KeyGenerate::~KeyGenerate() {}
+void KeyGenerate::createKeyFile(std::string keyMaster, std::string keyPath) {
+  std::ofstream newFile;
+  keyPath += "/key.sdes";
+  newFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+  try {
+    newFile.open(keyPath, std::ios::trunc);
+    for (char n : keyMaster) {
+      newFile << n;
+    }
+    newFile.close();
+  } catch (std::ifstream::failure e) {
+    std::cerr << "Erro ao criar arquivo da chave --> " <<  keyPath << std::endl;
+  }
+}

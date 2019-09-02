@@ -16,10 +16,13 @@
 
 class KeyGenerate {
  private:
-  std::string keySavePath =
-      "result/";  // Caminho para salvar a chave no formato string
+  std::string keySavePath = "data";  // Caminho para salvar a chave
+  bool checkKeySize(unsigned long);
+  std::string createKeyMaster(unsigned long);
+  void createKeyFile(std::string, std::string);
+
  public:
-  KeyGenerate(unsigned long);
+  KeyGenerate(unsigned long, std::string);
   ~KeyGenerate(void);
 };
 

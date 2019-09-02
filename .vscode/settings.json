@@ -1,4 +1,6 @@
 {
+    "C_Cpp.default.cppStandard": "c++17",
+    "C_Cpp.default.cStandard": "c11",
     "files.associations": {
         "array": "cpp",
         "atomic": "cpp",
@@ -21,10 +23,13 @@
         "vector": "cpp",
         "exception": "cpp",
         "algorithm": "cpp",
+        "functional": "cpp",
         "iterator": "cpp",
         "memory": "cpp",
         "memory_resource": "cpp",
+        "numeric": "cpp",
         "optional": "cpp",
+        "random": "cpp",
         "string": "cpp",
         "string_view": "cpp",
         "system_error": "cpp",
@@ -42,6 +47,8 @@
         "sstream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp",
-        "typeinfo": "cpp"
-    }
+        "typeinfo": "cpp",
+        "bit": "cpp"
+    },
+    "C_Cpp.clang_format_fallbackStyle": "Google"
 }

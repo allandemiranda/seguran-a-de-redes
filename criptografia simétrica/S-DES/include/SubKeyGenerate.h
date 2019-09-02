@@ -4,9 +4,9 @@
  * @brief Gerador de sub chaves
  * @version 0.1
  * @date 2019-08-30
- * 
+ *
  * @copyright Copyright (c) 2019
- * 
+ *
  */
 
 #ifndef SUBKEYGENERATE_H_
@@ -15,19 +15,24 @@
 #include <string>
 #include <vector>
 
-class SubKeyGenerate
-{
-private:
-    void getFeistelConfig(void); // Pegar as configurações Feistel
-    std::string feistelConfigPath = "data/feistelConfig.txt"; // Local do arquivo
-    std::string feistelConfigVector[3]; // Armazenar as configurações Feistel
-public:
-    std::vector <std::string> subKey; // Sub chaves finais em ordem de execulção
-    SubKeyGenerate(std::string);
-    ~SubKeyGenerate(void);
+class SubKeyGenerate {
+ private:
+  std::string masterKeyPath = "data/key.sdes";
+  std::string getMasterKey(std::string);
+  std::string masterKey;
+  void setSubKeys(unsigned long);
+  unsigned long numberOfNodes = 2;
+  std::string PMaster = "3 5 2 7 4 10 1 9 8 6";
+  std::string PSecond = "6 3 7 4 8 5 10 9";
+  std::vector<unsigned long> PMasterVector;
+  std::vector<unsigned long> PSecondVector;
+  const std::vector<unsigned long> explode(const std::string&);
+  bool checkPVector(unsigned long, std::vector<unsigned long>&);
+
+ public:
+  std::vector<std::string> subKeys;  // Sub chaves finais ordenadas
+  SubKeyGenerate(std::string, unsigned long, std::string, std::string);
+  ~SubKeyGenerate(void);
 };
-
-
-
 
 #endif /* SUBKEYGENERATE_H_ */
