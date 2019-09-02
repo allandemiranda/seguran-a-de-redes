@@ -99,7 +99,7 @@ bool SubKeyGenerate::checkPVector(unsigned long nSize,
                                   std::vector<unsigned long>& Pvector) {
   for (unsigned long i = 0; i < Pvector.size(); ++i) {
     if ((Pvector[i] < 0) or (Pvector[i] >= nSize)) {
-      throw "Inconpatibilidade entre o tamanho da chave e configuração de criação";
+      throw "Incompatibilidade entre o tamanho da chave e configuração de criação";
     }
   }
 }
