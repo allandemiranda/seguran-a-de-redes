@@ -1,69 +1,115 @@
 /**
  * @file main.cpp
- * @author Allan de Miranda
+ * @author Allan de Miranda Silva and Odilon Júlio dos Santos
  * @brief
  * @version 0.1
- * @date 2019-08-30
+ * @date 09-09-2019
  *
  * @copyright Copyright (c) 2019
  *
  */
 
-#include "KeyGenerate.h"
-#include "SubKeyGenerate.h"
-#include "TextEncoder.h"
+#include "BinaryToText.h"
+#include "Decode.h"
+#include "Encode.h"
+#include "KeyGeneration.h"
+#include "OpenFile.h"
+#include "SaveBinaryFile.h"
+#include "TextToBinary.h"
 
-#include <iostream>
-#include <string>
+#include <iostream>  // std::cout , std::endl
+#include <string>    // std::string
 
-int main(int argc, char const* argv[]) {
-  // Opção para o gerador de chave
-  if (argc == 3) {
-    std::string option = argv[1];
-    if (option == "newKey") {
-      unsigned long keySize = atoi(argv[2]);
-      try {
-        KeyGenerate novaChave(keySize, "");
-        std::cout << "Chave criada com sucesso" << std::endl;
-      } catch (const char* msg) {
-        std::cerr << msg << std::endl;
+void codificar(std::string);    // Codifiar texto
+void decodificar(std::string);  // Decodificar texto binário
+
+/**
+ * @brief Função menu
+ *
+ * @param argc Quantidade de parãmetros recebidos
+ * @param argv Parâmetros recebidos
+ * @return int 0 WARNING Programa não execultou
+ * @return int 1 ERROR Argumntos não digitados corretamente
+ * @return int 2 ERROR Opção inválida
+ * @return int 3 SUCCESS Arquivo codificado
+ * @return int 4 SUCCESS Arquivo decodificado
+ */
+int main(int argc, char const *argv[]) {
+  if (argc != 3) {
+    std::cout << "Erro! Digitar os argumentos corretamente." << std::endl;
+    return 1;
+  } else {
+    std::string opcao = argv[1];
+    std::string caminho = argv[2];
+    if (opcao == "codificar") {
+      codificar(caminho);
+      std::cout << "Arquivo " << caminho << " codificado !" << std::endl;
+      return 3;
+    } else {
+      if (opcao == "decodificar") {
+        decodificar(caminho);
+        return 4;
+      } else {
+        std::cout << "Erro! Digite uma opção válida" << std::endl;
+        return 2;
       }
     }
   }
-  if (argc == 4) {
-    std::string option = argv[1];
-    if (option == "newKey") {
-      unsigned long keySize = atoi(argv[2]);
-      std::string pach = argv[3];
-      try {
-        KeyGenerate novaChave(keySize, pach);
-        std::cout << "Chave criada com sucesso" << std::endl;
-      } catch (const char* msg) {
-        std::cerr << msg << std::endl;
-      }
-    }
+  return 0;
+}
+
+/**
+ * @brief Função para codificar texto de um arquivo
+ *
+ * @param caminho Caminho do arquivo com o texto
+ * @return std::string Texto codificado
+ */
+void codificar(std::string caminho) {
+  OpenFile chavePrincipal("data/key.des");
+  KeyGeneration subChaves(chavePrincipal.getLine(1));
+
+  OpenFile arquivoTexto(caminho);
+  std::string textoEmBinario;
+  for (auto i(0u); i < arquivoTexto.getSizeText(); ++i) {
+    TextToBinary paraBinario(arquivoTexto.getLine(i + 1));
+    textoEmBinario += paraBinario.getBinary();
   }
 
-  // Configurações S-DES
-  std::string keyPath = "";  // Ex: "/home/user/keys/key.sdes" -- Default: ""
-  unsigned long nodes = 0;   // Ex: 5 -- Default: 0
-  std::string pMaster = "";  // Ex: "3 5 2 7 4 10 1 9 8 6" -- Defalt: ""
-  std::string pSecond = "";  // Ex: "3 5 2 7 4 10 1 9 8 6" -- Defalt: ""
-  std::string initialPermutation =
-      "";  // Ex: "3 5 2 7 4 10 1 9 8 6" -- Defalt: ""
-  std::string finalPermutation =
-      "";  // Ex: "3 5 2 7 4 10 1 9 8 6" -- Defalt: ""
+  std::string textoCodficado;
+  for (auto i(0u); i < (textoEmBinario.size() / 8); ++i) {
+    std::string tempBinario;
+    for (auto j(0u); j < 8; ++j) {
+      tempBinario.push_back(textoEmBinario[(i * 8) + j]);
+    }
+    Encode codificado(tempBinario, subChaves.getKey(1), subChaves.getKey(2));
+    textoCodficado += codificado.getFinalPlaintext();
+  }
 
-  // Opções para codificador
-  // try {
-  //   SubKeyGenerate novo("", 0, "", "");
-  // } catch (const char* msg) {
-  //   std::cerr << msg << std::endl;
-  // }
-std::vector<std::string> a;
-  TextEncoder novo(a, "", "", "");
+  SaveBinaryFile salvarBinario(textoCodficado);
+}
 
-      // Opções para decodificador
+/**
+ * @brief Função para decodificar texto de um arquivo
+ *
+ * @param caminho Caminho do arquivo codificado
+ */
+void decodificar(std::string caminho) {
+  OpenFile chavePrincipal("data/key.des");
+  KeyGeneration subChaves(chavePrincipal.getLine(1));
 
-      return 0;
+  OpenFile arquivoBinario(caminho);
+  std::string arquivoBinarioDecodificado;
+  for (auto i(0u); i < (arquivoBinario.getLine(1).size() / 8); ++i) {
+    std::string tempBinario;
+    for (auto j(0u); j < 8; ++j) {
+      tempBinario.push_back(arquivoBinario.getLine(1)[(i * 8) + j]);
+    }
+    Decode decodificado(tempBinario, subChaves.getKey(1), subChaves.getKey(2));
+    arquivoBinarioDecodificado += decodificado.getFinalPlaintext();
+  }
+
+  BinaryToText textoFinal(arquivoBinarioDecodificado);
+  for (auto i(0u); i < textoFinal.getSizeText(); ++i) {
+    std::cout << textoFinal.getLine(i + 1) << std::endl;
+  }
 }
