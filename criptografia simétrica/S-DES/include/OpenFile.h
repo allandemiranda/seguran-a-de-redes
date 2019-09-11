@@ -1,6 +1,6 @@
 /**
  * @file OpenFile.h
- * @author Allan de Miranda Silva and Odilon Júlio dos Santos
+ * @author Allan de Miranda Silva (allandemiranda@gmail.com)
  * @brief Classe para abrir um arquivo de texto
  * @version 0.1
  * @date 09-09-2019

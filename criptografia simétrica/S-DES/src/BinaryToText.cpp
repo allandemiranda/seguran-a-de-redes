@@ -1,6 +1,6 @@
 /**
  * @file BinaryToText.cpp
- * @author Allan de Miranda Silva and Odilon Júlio dos Santos
+ * @author Allan de Miranda Silva (allandemiranda@gmail.com)
  * @brief Métodos da classe BinaryToText
  * @version 0.1
  * @date 09-09-2019

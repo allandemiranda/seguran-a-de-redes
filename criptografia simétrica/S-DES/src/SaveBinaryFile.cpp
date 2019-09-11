@@ -1,6 +1,6 @@
 /**
  * @file SaveBinaryFile.cpp
- * @author Allan de Miranda Silva and Odilon Júlio dos Santos
+ * @author Allan de Miranda Silva (allandemiranda@gmail.com)
  * @brief Métodos da classe SaveBinaryFile
  * @version 0.1
  * @date 10-09-2019

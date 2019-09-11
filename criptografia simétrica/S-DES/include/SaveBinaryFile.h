@@ -1,6 +1,6 @@
 /**
  * @file SaveBinaryFile.h
- * @author Allan de Miranda Silva and Odilon Júlio dos Santos
+ * @author Allan de Miranda Silva (allandemiranda@gmail.com)
  * @brief Classe para salvar texto binário em um arquivo
  * @version 0.1
  * @date 10-09-2019
