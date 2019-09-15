@@ -18,6 +18,7 @@
 #include <string.h>      // socket
 #include <sys/socket.h>  // socket
 #include <unistd.h>      // socket
+#include <bitset>        // std::bitset
 #include <iostream>      // std::cout, std::endl;
 #include <string>        // std::string
 #include <vector>        // std::vector
@@ -86,6 +87,9 @@ std::vector<char> Socket::receive(void) {
   }
   std::vector<char> strBuffer;
   for (char c : buffer) {
+    if (std::bitset<8>(c).to_ulong() == 0) {
+      break;
+    }
     strBuffer.push_back(c);
   }
   return strBuffer;

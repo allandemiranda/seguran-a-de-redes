@@ -79,7 +79,11 @@ int main(int argc, char const* argv[]) {
     } else {
       if (opition == "chat") {
         if (argc == 3) {
-          Chat newchat(argv[2]);
+          try {
+            Chat newchat(argv[2]);
+          } catch (const char* msg) {
+            std::cerr << msg << std::endl;
+          }
         } else {
           std::cout << "Erro! Digitar os argumentos corretamente." << std::endl;
           return 1;

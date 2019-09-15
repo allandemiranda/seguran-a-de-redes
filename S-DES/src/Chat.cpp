@@ -52,7 +52,6 @@ void Chat::channelRX(Socket* chat) {
     std::vector<char> novaMsg = chat->receive();
     if (analyzerCriptMSG(decript(novaMsg))) {
       setCript(decript(novaMsg));
-      continue;
     } else {
       std::cout << "Parceiro: ";
       for (char c : decript(novaMsg)) {
@@ -133,6 +132,8 @@ void Chat::setCript(std::vector<char> msg) {
   } else {
     key = "";
   }
+  std::cout << "---> Criptografia modificada para '" << cript << "' de chave '"
+            << key << "'" << std::endl;
 }
 
 /**
@@ -144,10 +145,18 @@ void Chat::setCript(std::vector<char> msg) {
  */
 bool Chat::analyzerCriptMSG(std::vector<char> msg) {
   std::string msg_s;
+  bool prim = true;
   for (char c : msg) {
+    if (prim) {
+      prim = false;
+      continue;
+    }
     msg_s.push_back(c);
   }
   std::vector<std::string> conf = explode(msg_s);
+  if ((conf.size() == 0) or (conf.size() > 3)) {
+    return false;
+  }
   if (conf[0] == "crypt") {
     if (conf[1] == "sdes") {
       if (conf[2].size() == 10) {
