@@ -18,11 +18,14 @@
 class RC4 {
  private:
   std::vector<char> arrayInt_Char(std::vector<unsigned int>);
+  std::vector<char> chatTxt;
 
  public:
   RC4(std::string, std::string);
   RC4(std::string, std::string, std::string);
+  RC4(std::vector<char>, std::string);
   ~RC4(void);
+  std::vector<char> getChatTxt(void);
 };
 
 #endif

@@ -52,6 +52,18 @@ RC4::RC4(std::string fileOpen, std::string key) {
 }
 
 /**
+ * @brief Construct a new RC4::RC4 object
+ *
+ * @param arquivoTexto Texto do chat
+ * @param key Chave do chat
+ */
+RC4::RC4(std::vector<char> arquivoTexto, std::string key) {
+  KSA one_step(key);
+  PRGA second_step(one_step.getS(), arquivoTexto);
+  chatTxt = arrayInt_Char(second_step.getText());
+}
+
+/**
  * @brief Destroy the RC4::RC4 object
  *
  */
@@ -70,3 +82,10 @@ std::vector<char> RC4::arrayInt_Char(std::vector<unsigned int> arrayNum) {
   }
   return text;
 }
+
+/**
+ * @brief Get the Chat Txt object
+ *
+ * @return std::vector<char> Chat do texto
+ */
+std::vector<char> RC4::getChatTxt(void) { return chatTxt; }

@@ -11,6 +11,7 @@
 
 #include <iostream>  // std::cout, std::endl;
 #include <string>    // std::string
+#include "Chat.h"
 #include "RC4.h"
 #include "SDES.h"
 
@@ -77,7 +78,12 @@ int main(int argc, char const* argv[]) {
       }
     } else {
       if (opition == "chat") {
-        // AQUI A PARTE DO CHAT
+        if (argc == 3) {
+          Chat newchat(argv[2]);
+        } else {
+          std::cout << "Erro! Digitar os argumentos corretamente." << std::endl;
+          return 1;
+        }
       } else {
         std::cout << "Erro! Digitar os argumentos corretamente." << std::endl;
         return 1;

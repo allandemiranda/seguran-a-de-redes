@@ -66,3 +66,35 @@ SDES::SDES(std::string fileOpen, std::string key) {
  *
  */
 SDES::~SDES(void) {}
+
+/**
+ * @brief Construct a new SDES::SDES object
+ *
+ * @param arquivoTexto Texto
+ * @param key Chave
+ * @param type TRUE Codificar
+ * @param type FALSE Decodificar
+ */
+SDES::SDES(std::vector<char> arquivoTexto, std::string key, bool type) {
+  KeyGenerationDes subChaves(key);
+  if (type) {
+    for (auto i(0u); i < arquivoTexto.size(); ++i) {
+      EncodeDes codificado(arquivoTexto[i], subChaves.getSubKey(1),
+                           subChaves.getSubKey(2));
+      chatTxt.push_back(codificado.getFinalPlaintext());
+    }
+  } else {
+    for (auto i(0u); i < arquivoTexto.size(); ++i) {
+      DecodeDes decodificado(arquivoTexto[i], subChaves.getSubKey(1),
+                           subChaves.getSubKey(2));
+      chatTxt.push_back(decodificado.getFinalPlaintext());
+    }
+  }
+}
+
+/**
+ * @brief Get the Chat Txt object
+ *
+ * @return std::vector<char> Texto do chat
+ */
+std::vector<char> SDES::getChatTxt(void) { return chatTxt; }
