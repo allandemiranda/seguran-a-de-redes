@@ -50,5 +50,10 @@
         "typeinfo": "cpp",
         "bit": "cpp"
     },
-    "C_Cpp.clang_format_fallbackStyle": "Google"
+    "C_Cpp.clang_format_fallbackStyle": "Google",
+    "files.autoSave": "onFocusChange",
+    "makefile-creator.makefile_cxxflags": "-fopenmp -Wall -Werror -Wextra -pedantic -std=c++17 -g",
+    "doxdocgen.generic.authorEmail": "allandemiranda@gmail.com",
+    "doxdocgen.generic.authorName": "Allan de Miranda Silva",
+    "doxdocgen.generic.dateFormat": "DD-MM-YYYY"
 }
